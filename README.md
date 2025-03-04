@@ -8,11 +8,12 @@ Setup
    - "gem install bundler"
 - Run "bundle install"
 
-This should install all the gems required to run the utility
+This should install all the gems required to run the utility and cucumber tests
 
 Usage
 -------------------------------------------------------------------------------
-- "./geocodes.sh {city,state} {zipcode}"
+- Run "./geocodes.sh {city,state} {zipcode}"
+- Will automatically add US to the city and state
 
 
 Tests

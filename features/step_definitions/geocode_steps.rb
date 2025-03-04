@@ -1,5 +1,5 @@
-When(/^the (\w+), (\w{2}) and (\w{2}) are given$/) do |city, state, country|
-  @response = @api.get_direct("#{city},#{state},#{country}")   
+When(/^the (\w*), (\w*) and (\w*) are given$/) do |city, state, country|
+  @response = @api.get_direct(location: "#{city},#{state},#{country}")
 end
 
 Then(/^the response contains latitude and longitude$/) do
@@ -9,8 +9,8 @@ Then(/^the response contains latitude and longitude$/) do
   expect(response['lon']).to_not be_nil
 end
 
-When(/^the (\w+) and (\w{2}) are given without a country$/) do |city, state|
-   @response = @api.get_direct("#{city},#{state}")
+When(/^the (\w*) and (\w*) are given without a country$/) do |city, state|
+   @response = @api.get_direct(location: "#{city},#{state}")
 end
 
 Then(/^the response does not contain latitude and longitude$/) do
@@ -19,16 +19,29 @@ Then(/^the response does not contain latitude and longitude$/) do
   expect(response).to be_nil
 end
 
-When(/^the (\d{5}) is given$/) do |zip_code|
-  @response = @api.get_postal(zip_code)
+When(/^the (\d+) is given$/) do |zip_code|
+  @response = @api.get_postal(zip: zip_code)
 end
 
 When(/^an invalid zip code is given$/) do
-  @response = @api.get_postal('ABCDE')  
+  @response = @api.get_postal(zip: 'ABCDE')
 end
 
 Then(/^the response returns a 404 error$/) do
   response = JSON.parse(@response.body)
   expect(response['cod']).to eq('404')
   expect(response['message']).to eq('not found')
+end
+
+When(/^a direct request is made without an API key$/) do
+  @response = @api.get_direct(location: 'Portland,OR', api_key: '')
+end
+
+When(/^a postal code request is made without an API key$/) do
+  @response = @api.get_postal(zip: 98601, api_key: '')
+end
+
+Then(/^the response returns a 401 error$/) do
+  response = JSON.parse(@response.body)
+  expect(response['cod']).to eq(401)
 end

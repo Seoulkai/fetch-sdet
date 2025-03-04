@@ -1,8 +1,6 @@
 require 'httparty'
 require 'json'
 
-require 'pry'
-
 class GeoCodeAPI
 
   def initialize
