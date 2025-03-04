@@ -12,11 +12,6 @@ This should install all the gems required to run the utility
 
 Usage
 -------------------------------------------------------------------------------
-- "ruby geocode.rb {city, state} {zip code}"
-
-In some cases, depending on the permissions on your system, it may be necessary
-to use an alternate executable:
-
-- "bundle exec ruby geocode.rb {city, state} {zip code}"
+- "./geocodes.sh {city,state} {zipcode}"
 
 
